@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<table class="cart-table">
+    <thead>
+    <tr>
+        <th>№</th>
+        <th>Изоображение</th>
+        <th>Наименование</th>
+        <th>Цена</th>
+        <th>Количество</th>
+        <th>Стоимость</th>
+    </tr>
+    </thead>
+    {% for item in cart %}
+        {% with product=item.product %}
+        <tr>
+            <td>
+                {{ product.id }}
+            </td>
+            <td>
+                {% if product.image %}
+                <img src="{{ product.image.url }}" style="wight:30px; height=30px">
+                {% endif %}
+            </td>
+            <td>
+                {{ product.name }}
+            </td>
+            <td>
+                {{ product.price }}
+            </td>
+            <td>
+                {{ item.quantity }}
+            </td>
+            <td>
+                {{ item.total_price }}
+            </td>
+        </tr>
+    {% endwith %}
+    {% endfor %}
+
+</table>
+<p>Всего товаров: {{ cart|length }}</p>
+<p>Сумма товаров в корзине: {{ cart.get_total_price }}</p>
+{% endblock %}
